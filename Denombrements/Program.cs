@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Denombrements
 {
@@ -62,54 +58,45 @@ namespace Denombrements
         static void Main(string[] args)
         {
             //choix de l'operation mathématiques
-            int choix = 1, n, t;
+            int n = 0, t = 0;
+            string choix = "1";
             long r1, r2;
-            while (choix != 0)
+            while (choix != "0")
             {
                 Console.WriteLine("Permutation ...................... 1");
                 Console.WriteLine("Arrangement ...................... 2");
                 Console.WriteLine("Combinaison ...................... 3");
                 Console.WriteLine("Quitter .......................... 0");
                 Console.Write("Choix :                            ");
-                //Control de saisie du choix
-                try
+                choix = Console.ReadLine();
+                //Saisie nombre total d'éléments à gérer
+                if (choix == "1" || choix == "2" || choix == "3")
+                t = Saisie("nombre total d'éléments à gérer = ");
                 {
-                    choix = int.Parse(Console.ReadLine());
+                    switch (choix)
+                    {
+                        //Opération Permutation
+                        case "1":
+                            long r = Multi(t, t);
+                            Console.WriteLine(t + "! = " + r);
+                            break;
+                        //Opération Arrangement
+                        case "2":
+                            n = Saisie("nombre d'éléments dans le sous ensemble = ");
+                            r1 = Multi(n, t);
+                            Console.WriteLine("A(" + t + "/" + n + ") = " + r1);
+                            break;
+                        //Opération Combinaison
+                        case "3":
+                            n = Saisie("nombre d'éléments dans le sous ensemble = ");
+                            r1 = Multi(n, t);
+                            r2 = Multi(n, n);
+                            Console.WriteLine("C(" + t + "/" + n + ") = " + (r1 / r2));
+                            break;
+                    }
                 }
-                catch
-                {
-                    choix = 4;
-                }
-                switch (choix)
-                {
-                    //Operation Sortie du programme
-                    case 0:
-                        Environment.Exit(0);
-                        break;
-                    //Opération Permutation
-                    case 1:
-                        n = Saisie("nombre total d'éléments à gérer = ");
-                        long r = Multi(n, n);
-                        Console.WriteLine(n + "! = " + r);
-                        break;
-                    //Opération Arrangement
-                    case 2:
-                        t = Saisie("nombre total d'éléments à gérer = ");
-                        n = Saisie("nombre d'éléments dans le sous ensemble = ");
-                        r1 = Multi(n, t);
-                        Console.WriteLine("A(" + t + "/" + n + ") = " + r1);
-                        break;
-                    //Opération Combinaison
-                    case 3:
-                        t = Saisie("nombre total d'éléments à gérer = ");
-                        n = Saisie("nombre d'éléments dans le sous ensemble = ");
-                        r1 = Multi(n, t);
-                        r2 = Multi(n, n);
-                        Console.WriteLine("C(" + t + "/" + n + ") = " + (r1 / r2));
-                        break;
-                }
+                
             }
-            Console.ReadLine();
         }
     }
 }
