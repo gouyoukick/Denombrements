@@ -1,73 +1,102 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Denombrements
 {
+    /**
+    * titre: denombrement
+    * description: outil mathématiques
+    * auteur: BTSSIO
+    * date création: 2021
+    * date dernière modification: 09/10/2021
+    */
     class Program
     {
+        /// <summary>
+        /// Multiplication d'une suite d'entiers d'une valeur à une autre
+        /// </summary>
+        /// <param name="n">petite valeur</param>
+        /// <param name="t">grande valeur</param>
+        /// <returns>résultat</returns>
+        static long Multi(int n, int t)
+        {
+            long result = 1;
+            for (int k = (t - n + 1); k <= t; k++)
+                result *= k;
+            return result;
+        }
+
+        /// <summary>
+        /// Demande de saisie avec controle et retour de réponse
+        /// </summary>
+        /// <param name="message">demande</param>
+        /// <returns>réspone</returns>
+        static int Saisie(string message)
+        {
+            int rep=0;
+            bool correct;
+            do
+            {
+                try
+                {
+                    Console.Write(message);
+                    rep = int.Parse(Console.ReadLine());
+                    correct = true;
+
+                }
+                catch
+                {
+                    correct = false;
+                }
+            } while (correct == false);
+            return rep;
+        }
+
+        /// <summary>
+        /// Outil Mathématique pour obtenir Permutation, Arrangement et Combinaison
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
-            int c = 1;
-            while (c != 0)
+            //choix de l'operation mathématiques
+            int n = 0, t = 0;
+            string choix = "1";
+            long r1, r2;
+            while (choix != "0")
             {
                 Console.WriteLine("Permutation ...................... 1");
                 Console.WriteLine("Arrangement ...................... 2");
                 Console.WriteLine("Combinaison ...................... 3");
                 Console.WriteLine("Quitter .......................... 0");
                 Console.Write("Choix :                            ");
-                c = int.Parse(Console.ReadLine());
-
-                if (c == 0) { Environment.Exit(0); }
-
-                if (c == 1)
+                choix = Console.ReadLine();
+                //Saisie nombre total d'éléments à gérer
+                if (choix == "1" || choix == "2" || choix == "3")
+                t = Saisie("nombre total d'éléments à gérer = ");
                 {
-                    Console.Write("nombre total d'éléments à gérer = "); // le nombre d'éléments à gérer
-                    int n = int.Parse(Console.ReadLine()); // saisir le nombre
-                                                           // calcul de r
-                    long r = 1;
-                    for (int k = 1; k <= n; k++)
-                        r *= k;
-                    Console.WriteLine(n + "! = " + r);
-                }
-                else
-                {
-                    if (c == 2)
+                    switch (choix)
                     {
-                        Console.Write("nombre total d'éléments à gérer = "); // le nombre d'éléments à gérer
-                        int t = int.Parse(Console.ReadLine()); // saisir le nombre
-                        Console.Write("nombre d'éléments dans le sous ensemble = "); // le sous ensemble
-                        int n = int.Parse(Console.ReadLine()); // saisir le nombre
-                        // calcul de r
-                        long r = 1;
-                        for (int k = (t - n + 1); k <= t; k++)
-                            r *= k;
-                        //Console.WriteLine("résultat = " + (r1 / r2));
-                        Console.WriteLine("A(" + t + "/" + n + ") = " + r);
-                    }
-                    else
-                    {
-                        Console.Write("nombre total d'éléments à gérer = "); // le nombre d'éléments à gérer
-                        int t = int.Parse(Console.ReadLine()); // saisir le nombre
-                        Console.Write("nombre d'éléments dans le sous ensemble = "); // le sous ensemble
-                        int n = int.Parse(Console.ReadLine()); // saisir le nombre
-                        // calcul de r1
-                        long r1 = 1;
-                        for (int k = (t - n + 1); k <= t; k++)
-                            r1 *= k;
-                        // calcul de r2
-                        long r2 = 1;
-                        for (int k = 1; k <= n; k++)
-                            r2 *= k;
-                        // calcul de r3
-                        //Console.WriteLine("résultat = " + (r1 / r2));
-                        Console.WriteLine("C(" + t + "/" + n + ") = " + (r1 / r2));
+                        //Opération Permutation
+                        case "1":
+                            long r = Multi(t, t);
+                            Console.WriteLine(t + "! = " + r);
+                            break;
+                        //Opération Arrangement
+                        case "2":
+                            n = Saisie("nombre d'éléments dans le sous ensemble = ");
+                            r1 = Multi(n, t);
+                            Console.WriteLine("A(" + t + "/" + n + ") = " + r1);
+                            break;
+                        //Opération Combinaison
+                        case "3":
+                            n = Saisie("nombre d'éléments dans le sous ensemble = ");
+                            r1 = Multi(n, t);
+                            r2 = Multi(n, n);
+                            Console.WriteLine("C(" + t + "/" + n + ") = " + (r1 / r2));
+                            break;
                     }
                 }
+                
             }
-            Console.ReadLine();
         }
     }
 }
